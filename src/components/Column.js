@@ -1,40 +1,43 @@
 import React, { Component } from 'react';
-import Cell from './Cell';
 
 class Column extends Component {
   constructor(props) {
     super(props);
-    this.cells = [],
+    this.cells = []
     this.state = {
-      cellNums: 6,
-      cells: [],
-      className: "cell"
+      cells: new Array(6).fill('cell')
     }
 
   }
     
   render() {
-    this.cells = []
-    for (let i = 0;i < this.state.cellNums;i++) {
-      this.cells.push(<div className={this.state.className} key={i}></div>)
-    }
+    let cells = this.state.cells
+    let renderCells = cells.map((item, num) => {
+      let className = item
+      return <div key={num} className={className}></div>
+    })
     
     return (
-      <div className="column" onClick={this.takeOwner}>
-        {this.cells}
+      <div className='column' onClick={this.takeOwner}>
+        {renderCells}
       </div>
     )
   }
 
   takeOwner = () => {
-    this.setState({className: "cell red"})
+    let cells = this.state.cells
+    let i = cells.lastIndexOf('cell')
+    if (i !== -1) {
+      if (this.props.currentPlayer) {
+        cells.splice(i,1,'cell red')
+      }
+      else {
+        cells.splice(i,1,'cell yellow')
+      }
+      this.props.changePlayer()
+    }
+    this.setState({cells: cells})
   }
-
-  getIndex = () => {
-    return (alert(this.props.index))
 }
-}
-
-
 
 export default Column

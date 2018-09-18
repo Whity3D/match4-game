@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import Column from './Column';
 
-function Board() {
+function Board(props) {
+
     const colNums = 7;
     const cols = []
     for (let i = 0;i < colNums;i++) {
        
-       cols.push(<Column index={i} key={i}/>)
+       cols.push(<Column changePlayer={props.changePlayer} currentPlayer={props.currentPlayer} index={i} key={i}/>)
     }
     return (
         <div className="board">

@@ -1,8 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-function TurnController() {
+function TurnController(props) {
+    let player = "RED"
+    if (!props.currentPlayer)
+       { player = "YELLOW" }
     return (
-        <h2>RED Player turn</h2>
+        <h2>{player} Player turn</h2>
     );
 }
 
