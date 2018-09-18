@@ -3,17 +3,12 @@ import React, { Component } from 'react';
 class Column extends Component {
   constructor(props) {
     super(props);
-    this.cells = []
-    this.state = {
-      cells: new Array(6).fill('cell')
-    }
-
   }
     
   render() {
-    let cells = this.state.cells
+    let cells = this.props.propCells
     let renderCells = cells.map((item, num) => {
-      let className = item
+      let className = item.status
       return <div key={num} className={className}></div>
     })
     
@@ -25,18 +20,16 @@ class Column extends Component {
   }
 
   takeOwner = () => {
-    let cells = this.state.cells
-    let i = cells.lastIndexOf('cell')
-    if (i !== -1) {
-      if (this.props.currentPlayer) {
-        cells.splice(i,1,'cell red')
+    let cells = this.props.propCells
+    cells.reverse()
+    for (let i = 0; i < cells.length; i++) {
+      let ind
+      if (cells[i].status === 'cell') {
+        ind = cells[i].index
+        this.props.makeTurn(ind)
+        return
       }
-      else {
-        cells.splice(i,1,'cell yellow')
-      }
-      this.props.changePlayer()
     }
-    this.setState({cells: cells})
   }
 }
 

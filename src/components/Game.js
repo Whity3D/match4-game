@@ -9,6 +9,7 @@ class Game extends Component {
         super();
         this.state = {
             isRedCurrent: true,
+            isBoardFill: false,
         }
     }
 
@@ -16,12 +17,19 @@ class Game extends Component {
         this.setState({isRedCurrent: !this.state.isRedCurrent})
     }
 
+    fillHandler = (cells) => {
+        let isFill = cells.every((item) => {
+           return item !== 'cell'? true : false
+        })
+        this.setState({isBoardFill: isFill})
+    }
+
     render() {
 
         return (
             <div className="game">
-                <TurnController currentPlayer={this.state.isRedCurrent}/>
-                <Board changePlayer={this.changePlayer} currentPlayer={this.state.isRedCurrent}/>
+                <TurnController isBoardFill={this.state.isBoardFill} currentPlayer={this.state.isRedCurrent}/>
+                <Board changePlayer={this.changePlayer} fillHandler={this.fillHandler} currentPlayer={this.state.isRedCurrent}/>
             </div> 
         )
     }
