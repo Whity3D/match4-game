@@ -17,10 +17,9 @@ class Game extends Component {
         this.setState({isRedCurrent: !this.state.isRedCurrent})
     }
 
-    fillHandler = (cells) => {
-        let isFill = cells.every((item) => {
-           return item !== 'cell'? true : false
-        })
+    fillHandler = (columns) => {
+        let cells = columns[0].concat(columns[1],columns[2],columns[3],columns[4],columns[5],columns[6])
+        let isFill = (cells.indexOf('cell') === -1) ? true : false
         this.setState({isBoardFill: isFill})
     }
 

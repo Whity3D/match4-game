@@ -5,33 +5,36 @@ import Column from './Column';
 class Board extends Component {
     constructor(props) {
         super(props);
-        this.state={
-            globalCells: new Array(42).fill('cell')
+        this.state= {
+            cellsColumns: []
+            
         }
     }
 
-    makeTurn = (index) => {
+    componentDidMount() {
+        function chunk() {
+            let cells = new Array(42).fill('cell')
+            let tmp = [];
+            for (let i=0; i < cells.length; i+=6)
+              tmp.push(cells.slice(i,i+6));
+            return tmp;
+        }
+        let columns = chunk()
+        this.setState({cellsColumns: columns})
+    }
+
+    makeTurn = (cellIndex, colIndex) => {
         let currentPlayer = this.props.currentPlayer ? "cell red" : "cell yellow"
-        let cells = this.state.globalCells
-        cells.splice(index, 1, currentPlayer)
-        this.setState({globalCells: cells})
+        let columns = this.state.cellsColumns
+        columns[colIndex].splice(cellIndex, 1, currentPlayer)
+        this.setState({cellColumns: columns})
         this.props.changePlayer()
-        this.props.fillHandler(cells)
+        this.props.fillHandler(columns)
 
     }
 
     render() {
-        let cells = this.state.globalCells
-        let objCells = cells.map((item,index) => {
-            return {index: index, status: item}
-        })
-        function chunk() {
-            let tmp = [];
-            for (let i=0; i < objCells.length; i+=6)
-              tmp.push(objCells.slice(i,i+6));
-            return tmp;
-          }
-        let columns = chunk()
+        let columns = this.state.cellsColumns
         let renderColumns = columns.map((item, num) => {
             return <Column makeTurn={this.makeTurn} propCells={item} changePlayer={this.props.changePlayer} index={num} key={num}/>
           })

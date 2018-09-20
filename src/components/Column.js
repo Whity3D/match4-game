@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 
 class Column extends Component {
-  constructor(props) {
-    super(props);
-  }
     
   render() {
     let cells = this.props.propCells
     let renderCells = cells.map((item, num) => {
-      let className = item.status
+      let className = item
       return <div key={num} className={className}></div>
     })
     
@@ -21,14 +18,9 @@ class Column extends Component {
 
   takeOwner = () => {
     let cells = this.props.propCells
-    cells.reverse()
-    for (let i = 0; i < cells.length; i++) {
-      let ind
-      if (cells[i].status === 'cell') {
-        ind = cells[i].index
-        this.props.makeTurn(ind)
-        return
-      }
+    let cellIndex = cells.lastIndexOf('cell')
+    if (cellIndex !== -1) { 
+      this.props.makeTurn(cellIndex,this.props.index) 
     }
   }
 }
