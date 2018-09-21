@@ -28,10 +28,12 @@ class Board extends Component {
         let columns = this.state.cellsColumns
         columns[colIndex].splice(cellIndex, 1, currentPlayer)
         this.setState({cellColumns: columns})
-        this.props.changePlayer()
         this.props.fillHandler(columns)
-
+        this.props.checkWin(columns)
+        this.props.changePlayer()
     }
+
+    
 
     render() {
         let columns = this.state.cellsColumns
